@@ -3614,7 +3614,7 @@ avg_group.reset_index()</div>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [129]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [148]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
 <clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-34">
@@ -3627,10 +3627,10 @@ avg_group.reset_index()</div>
 </div>
 </clipboard-copy>
 </div>
-<div class="highlight-ipynb hl-python"><pre><span></span><span class="n">px</span><span class="o">.</span><span class="n">line</span><span class="p">(</span><span class="n">data_frame</span><span class="o">=</span><span class="n">avg_group</span><span class="p">,</span>  <span class="n">y</span><span class="o">=</span><span class="s1">'average_mpg'</span><span class="p">)</span>
+<div class="highlight-ipynb hl-python"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">line</span><span class="p">(</span><span class="n">data_frame</span><span class="o">=</span><span class="n">avg_group</span><span class="p">,</span>  <span class="n">y</span><span class="o">=</span><span class="s1">'average_mpg'</span><span class="p">)</span>
 <span class="n">fig</span><span class="o">.</span><span class="n">write_image</span><span class="p">(</span><span class="s2">"images/plt_11.png"</span><span class="p">)</span>
 </pre></div>
-<div class="clipboard-copy-txt" id="cell-34">px.line(data_frame=avg_group,  y='average_mpg')
+<div class="clipboard-copy-txt" id="cell-34">fig = px.line(data_frame=avg_group,  y='average_mpg')
 fig.write_image("images/plt_11.png")</div>
 </div>
 </div>
