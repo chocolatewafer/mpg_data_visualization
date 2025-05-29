@@ -1,0 +1,69 @@
+site_name: Data visualization using Plotly
+repo_url: https://github.com/chocolatewafer/mpg_data_visualization.git
+
+theme:
+  name: material
+
+  language: en
+
+  logo: assets/car.png
+  favicon: assets/data.png
+
+  icon:
+    previous: fontawesome/solid/angle-left
+    next: fontawesome/solid/angle-right
+
+  palette:
+
+    # Palette toggle for light mode
+    - scheme: default
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+
+    # Palette toggle for dark mode
+    - scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+
+  features:
+      - content.code.copy
+      - content.code.select
+      - navigation.expand
+      - navigation.footer
+      - navigation.instant
+      - navigation.instant.progress
+      - navigation.path
+      - navigation.sections
+      - navigation.tabs
+      - navigation.tabs.sticky
+      - navigation.top
+      - search.suggest
+      - search.share
+      - search.highlight
+      - toc.integrate
+      - toc.follow
+      - toc:
+          toc_depth: 3
+
+plugins:
+  - search
+  - mkdocs-jupyter:
+      execute: false
+
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/chocolatewafer
+      name: chocolatewafer on github
+    - icon: fontawesome/brands/linkedin
+      link: https://www.linkedin.com/in/sparsh-nidhi-74381915a
+    - icon: fontawesome/brands/discord
+      link: https://fosstodon.org/@squidfunk
+  generator: false
+
+nav:
+  - Home: index.md
+  - Notebook-Page: data_exploration_rendered.ipynb
