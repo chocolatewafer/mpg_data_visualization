@@ -1,5 +1,6 @@
 site_name: Data visualization using Plotly
 repo_url: https://github.com/chocolatewafer/mpg_data_visualization.git
+site_url: https://chocolatewafer.github.io/mpg_data_visualization/
 
 theme:
   name: material
