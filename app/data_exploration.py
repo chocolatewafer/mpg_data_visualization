@@ -1,20 +1,6 @@
-# ---
-# jupyter:
-#   jupytext:
-#     text_representation:
-#       extension: .py
-#       format_name: percent
-#       format_version: '1.3'
-#       jupytext_version: 1.17.1
-#   kernelspec:
-#     display_name: .venv
-#     language: python
-#     name: python3
-# ---
-
 import streamlit as st
 
-# %%
+
 import pandas as pd
 import plotly as plt
 import plotly.graph_objects as go
@@ -24,7 +10,7 @@ from skimage import io
 
 st.set_page_config(page_title="Data Viz", page_icon="📈", layout="wide")
 
-# %% [markdown]
+
 st.markdown(
     """
 # Data Visualization of seaborn-data
@@ -35,7 +21,6 @@ I am using Plotly and Streamlit for this task.
 )
 
 
-# %%
 mpg_data = pd.read_csv(
     "https://raw.githubusercontent.com/mwaskom/seaborn-data/refs/heads/master/mpg.csv"
 )
@@ -52,17 +37,16 @@ st.dataframe(mpg_data.head(10))
 
 st.dataframe(mpg_data.head(10))
 st.markdown("---")
-# %% [markdown]
+
 st.markdown("## Reading and cleaning dataset")
 
 
-# %% [markdown]
 st.markdown(
     """### Initial Observation
 The car dataset has many models of cars produced across different years. The origin and engine performance metrics are listed out.
 """
 )
-# %% [markdown]
+
 st.markdown(
     """
 ### Check for missing values
@@ -71,12 +55,12 @@ st.markdown(
 col1, col2 = st.columns(spec=[0.3, 0.7])
 
 with col1:
-    # %%
+
     st.markdown("```mpg_data.isna().sum()```")
     st.dataframe(mpg_data.isna().sum())
 
 with col2:
-    # %%
+
     temp = mpg_data[mpg_data.isna().any(axis=1)]
     selected_column = st.selectbox("", options="horsepower")
     df_styled = temp.style.set_properties(
@@ -86,17 +70,16 @@ with col2:
     st.dataframe(df_styled)
 
 
-# %%
 st.markdown("### Drop/Impute Data")
 st.markdown(
     "Since there are not many rows that contain null values in horsepower that are not the extremes, I decided to simply drop these data."
 )
 mpg_data.dropna(inplace=True)
 st.markdown("```mpg_data.dropna(inplace=True)```")
-# %%
+
 mpg_data["horsepower"] = pd.to_numeric(mpg_data["horsepower"])
 
-# %% [markdown]
+
 st.markdown(
     """
 ## Summary of the Data
@@ -104,13 +87,11 @@ st.markdown(
 )
 
 
-# %%
-
 st.dataframe(mpg_data.describe())
 
 st.code("st.dataframe(mpg_data.describe())", language="python")
 
-# %%
+
 with st.expander("See more Univariate Operations", expanded=False):
     st.markdown(
         """```mpg_data.loc[mpg_data['horsepower'] == mpg_data['horsepower'].max()]```"""
@@ -165,7 +146,6 @@ with st.expander("See more Univariate Operations", expanded=False):
         ).iloc[0]
 
 
-# %%
 with st.expander(
     label="Python Code for Plotting Car Category Images in a Subplot Grid using Plotly"
 ):
@@ -257,17 +237,17 @@ fig.update_layout(
 # fig.show()
 st.plotly_chart(fig)
 
-# %% [markdown]
+
 # ## Univariate Analysis
 
-# %% [markdown]
+
 # ## Graphs and Visualizations
 
-# %%
+
 px.histogram(data_frame=mpg_data, x="cylinders")
 st.code(px.histogram(data_frame=mpg_data, x="cylinders"), language="python")
 
-# %% [markdown]
+
 st.markdown(
     """
 We can see from this chart that most Cars are **4, 6** or **8** cylinders. This might be due to even numbers of cylinders providing better manufacturing cost, efficiency or performance, due to which car manufacturers choose this configuration.
@@ -279,14 +259,14 @@ What we can also observe is that we have higher number of 4 cylinder cars in our
 One final consideration to this line of thinking should be that the data collection might be uneven, giving us this particular distribution of cars; making both of our hypothesis completely invalid.
 """
 )
-# %%
+
 
 st.code(
-    px.box(
+    """px.box(
         data_frame=mpg_data.sort_values(by="cylinders"),
         y=["horsepower"],
         facet_col="cylinders",
-    ),
+    )""",
     language="python",
 )
 st.plotly_chart(
@@ -296,7 +276,7 @@ st.plotly_chart(
         facet_col="cylinders",
     )
 )
-# %%
+
 
 st.code(
     px.box(
@@ -314,101 +294,103 @@ st.plotly_chart(
     )
 )
 
-# %% [markdown]
+
 # ### Inspecting Outliers
 
-# %%
-mpg_data[mpg_data.horsepower == 165]
 
-# %%
+st.dataframe(mpg_data[mpg_data.horsepower == 165])
+
+
 mpg_data[mpg_data.horsepower == 230]
 
-# %%
+
 mpg_data[(mpg_data.mpg == 38) & (mpg_data.cylinders == 6)]
 
-# %%
+
 mpg_data[(mpg_data.mpg == 26.6) & (mpg_data.cylinders == 8)]
 
-# %% [markdown]
-# ### Observations
-#
-# From these two graphs we can have some insights as to how:
-# - **4 cylinder** cars have lower horsepower but are more fuel efficient.
-# - **6 cylinder** cars seems to have a balanced horsepower and fuel consumption.
-# -  On the contrary, **8 cylinder** cars have greater horsepower but are quite fuel hungry in general.
-#
-# All this seems to be in line with the hypothesis that the 3 and 5 cylinder engines are not very performant, giving relatively low horsepower over average fuel efficiency. The **4 cylinder** cars seem to have a good balance between horsepower and miles per gallon.
-#
-# ### Spread and Outliers
-#
-# There is a varied mpg and horsepower observed in 8 cylinder cars meaning there are a regular cars and then there are muscle cars giving a greater range of mpgs and horsepowers.
-#
-# There are some outliers is both mpg and horsepower graphs.
-#
-# #### Muscle Cars
-# The 6 cylinder **buick regal sport coupe (turbo)** is a muscle car giving a very high horsepower and comes in line with other average 8 cylinder cars. Similarly the 230hp **pontiac grand prix** is a 8 cylinder beast of a muscle car which explains the very high horsepower.
-#
-# ## Efficient Cars
-# There are certain economy or diesel version of cars that make them exceptionally fuel efficient like the 6 cylinder **oldsmobile cutlass ciera (diesel)** or the 8 cylinder **oldsmobile cutlass ls**
-#
-#
-# To get a more complete picture, we need to perform further analysis. Let us hence try to gather more insights from our data regarding engine performance with respect to number of cylinders, displacement, weight and country of origin.
 
-# %%
+### Observations
+st.markdown(
+    """
+From these two graphs we can have some insights as to how:
+- **4 cylinder** cars have lower horsepower but are more fuel efficient.
+- **6 cylinder** cars seems to have a balanced horsepower and fuel consumption.
+-  On the contrary, **8 cylinder** cars have greater horsepower but are quite fuel hungry in general.
+
+All this seems to be in line with the hypothesis that the 3 and 5 cylinder engines are not very performant, giving relatively low horsepower over average fuel efficiency. The **4 cylinder** cars seem to have a good balance between horsepower and miles per gallon.
+
+### Spread and Outliers
+
+There is a varied mpg and horsepower observed in 8 cylinder cars meaning there are a regular cars and then there are muscle cars giving a greater range of mpgs and horsepowers.
+
+There are some outliers is both mpg and horsepower graphs.
+
+### Muscle Cars
+The 6 cylinder **buick regal sport coupe (turbo)** is a muscle car giving a very high horsepower and comes in line with other average 8 cylinder cars. Similarly the 230hp **pontiac grand prix** is a 8 cylinder beast of a muscle car which explains the very high horsepower.
+
+### Efficient Cars
+There are certain economy or diesel version of cars that make them exceptionally fuel efficient like the 6 cylinder **oldsmobile cutlass ciera (diesel)** or the 8 cylinder **oldsmobile cutlass ls**
+
+
+To get a more complete picture, we need to perform further analysis. Let us hence try to gather more insights from our data regarding engine performance with respect to number of cylinders, displacement, weight and country of origin.
+"""
+)
+
+
 px.histogram(data_frame=mpg_data, y="origin", color="origin")
 
-# %% [markdown]
+
 # Seems like most cars in our dataset are **USA** based and there are only two other origins i.e. **Japan** and **Europe**.
 # We can now analyze our cars categoirically based on the countries. Let us see what differences cars of each country possess.
 
-# %%
+
 px.histogram(data_frame=mpg_data, x="model_year", facet_col="origin")
 
-# %%
+
 px.box(data_frame=mpg_data, y=["mpg", "acceleration"], facet_col="origin")
 
-# %%
+
 px.box(data_frame=mpg_data, y="horsepower", facet_col="origin")
 
-# %%
+
 mpg_data.groupby("origin").agg(mean_horsepower=("horsepower", "mean")).reset_index()
 
-# %% [markdown]
+
 # This shows us that Japanese cars are the most fuel efficient while USA has on average, more powerful cars. Also worth noting is that USA has a higher fence for hp meaning that there are car variants that are very powerful (muscle cars) which we see lacking in other countires.
 
-# %% [markdown]
+
 # ## Bivariate analysis
 
-# %%
+
 px.scatter(data_frame=mpg_data, x="cylinders", y="origin", color="origin")
 
-# %% [markdown]
+
 # In the dataset, US based cars have a higher count of cylinders, while Japanese and European cars have lower cylinders, but innovate in 3 cylinder or 5 cylinder engines.
 # This might be due to racing being more poular and prevalant in the US or due to road networks being better in the US with consumer culture demanding more powerful cars.
 
-# %%
+
 # px.box(data_frame=mpg_data, x='mpg')
 px.scatter(data_frame=mpg_data, x="model_year", y="mpg", facet_col="origin")
 
-# %%
+
 avg_group = pd.DataFrame()
 avg_group = mpg_data.groupby(by="model_year").agg(average_mpg=("mpg", "mean"))
 avg_group.reset_index()
 
-# %% [markdown]
+
 # A trend of mpg getting better across the years can be seen in all the countries.
 
-# %%
+
 px.line(data_frame=avg_group, y="average_mpg")
 
 
-# %% [markdown]
 # Getting the ***average mpg*** for models that came out each year across all countries shows that there is actually a steady **increase** in the fuel efficiency across the years.
 
-# %% [markdown]
+
 # ### Getting names of company to see the Distribution of Car according to company
 
-# %%
+
 def get_first_name(x):
     full_name = x.split(" ")
     company = full_name[0]
@@ -417,25 +399,25 @@ def get_first_name(x):
 
 mpg_data["company"] = mpg_data["name"].apply(lambda x: get_first_name(x))
 
-# %%
+
 company_hist = px.histogram(data_frame=mpg_data, x="company")
 company_hist.show()
 
-# %%
+
 country_df = mpg_data.groupby("company").agg(mean_mpg=("mpg", "mean"))
 country_df.reset_index().sort_values(by="mean_mpg", ascending=False).head()
 
-# %%
+
 country_df = mpg_data.groupby("company").agg(mean_horsepower=("horsepower", "mean"))
 country_df.reset_index().sort_values(by="mean_horsepower", ascending=False).head()
 
-# %% [markdown]
+
 # # Bivariate Analysis of Numerical Data
 
-# %% [markdown]
+
 # To gain proper insigts and explore, I wrote code to plot all values vs all other values.
 
-# %%
+
 from plotly.subplots import make_subplots
 
 col_names = [
@@ -470,7 +452,7 @@ for i in range(1, len(col_names)):
 fig.update_layout(height=720, width=1080, title_text=f"{col_names[0]} vs others")
 fig.show()
 
-# %% [markdown]
+
 # ### Observations: mpg vs others
 #
 # From these graphs, we can make a number of Observations.
@@ -479,7 +461,7 @@ fig.show()
 # - Acceleration and mpg do not have a obvious relationship due to a highly scattered plot. We do see a proportional trend, which is quite counter intuitive.
 # - As the years progress, cars are getting more fuel efficient.
 
-# %%
+
 from plotly.subplots import make_subplots
 
 col_names = [
@@ -513,7 +495,7 @@ for i in range(1, len(col_names)):
 fig.update_layout(height=720, width=1080, title_text=f"{col_names[0]} vs others")
 fig.show()
 
-# %% [markdown]
+
 # ### Observations: Cylinders vs others
 # We can see that more number of **cylinder** means higher **horse power**, more **displacement** and also a **heavier engine**.
 #
@@ -525,7 +507,7 @@ fig.show()
 #
 # **6 cylinder engines** have a good balance of efficiency and horsepower. **8 cylinder engines** pack a punch with higher horsepower but guzzle a lot of fuel. The **8 cylinder** engines are some of the most powerful engines with very high horsepower. This makes sense as more cylinders will displace more fuel, producing more power but meaning lower fuel efficiency. At the same time bigger and heavier engines are needed to accomodate more number of cylinders.
 
-# %%
+
 from plotly.subplots import make_subplots
 
 col_names = ["displacement", "horsepower", "weight", "acceleration", "model_year"]
@@ -552,7 +534,7 @@ for i in range(1, len(col_names)):
 fig.update_layout(height=720, width=1080, title_text=f"{col_names[0]} vs others")
 fig.show()
 
-# %%
+
 from plotly.subplots import make_subplots
 
 col_names = ["horsepower", "weight", "acceleration", "model_year"]
@@ -579,7 +561,7 @@ for i in range(1, len(col_names)):
 fig.update_layout(height=720, width=1080, title_text=f"{col_names[0]} vs others")
 fig.show()
 
-# %% [markdown]
+
 # ### Observation: horsepower vs others & displacement vs others
 # We can see the relationships between weight, displacement and horsepower, i.e
 #
@@ -595,17 +577,17 @@ fig.show()
 #
 # To make more sense out of this we can create a correlation heatmap and perform further multivariate analysis.
 
-# %% [markdown]
+
 # ## CORRELATION HEATMAP
 
-# %%
+
 correlation = mpg_data.select_dtypes("number").corr("pearson")
 correlation
 
-# %%
+
 px.imshow(correlation, text_auto=True, color_continuous_scale="thermal", aspect="auto")
 
-# %% [markdown]
+
 # The correlation heatmaps confirms the relation between **cylinder, displacement, horsepower and weight.**
 # We also see that these affect mpg negatively as expected.
 #
@@ -614,27 +596,27 @@ px.imshow(correlation, text_auto=True, color_continuous_scale="thermal", aspect=
 # But then acceleration is negatively proportional to cylinder, displacement, horsepower and weight, which is still unexplained.
 # Whats more, there is a weakly positive relation between acceleration and mpg meaning higher acceleration gives better mileage, which is not logical.
 
-# %%
+
 px.scatter(data_frame=mpg_data, x="horsepower", y="mpg", color="model_year")
 
-# %% [markdown]
+
 # From this plot we can confirm that newer models are more efficient than the older ones. However, we can see that the newer models also have lower horsepower.
 
-# %%
+
 px.scatter(data_frame=mpg_data, x="weight", y="horsepower", color="model_year")
 
-# %% [markdown]
+
 # With this graph we find that heavier models are all older models, which also have a lot of horse power. The newer models are not only fuel efficient but are lighter and provide lower power output.
 #
 # This raises a questions as why the companies would build such cars with low power and weight but better fuel efficiency?
 
-# %%
+
 px.scatter(data_frame=mpg_data, x="horsepower", y="acceleration", color="model_year")
 
-# %% [markdown]
+
 # This tells us almost all new models have low horse power but high acceleration. Even though there were some older models that had low horsepower/high acceleration.
 
-# %%
+
 px.scatter(
     data_frame=mpg_data,
     x="weight",
@@ -643,10 +625,10 @@ px.scatter(
     color_continuous_scale="temps",
 )
 
-# %% [markdown]
+
 # Higher horsepower cars are almost always rather heavy with lower acceleration.
 
-# %%
+
 cyl = (
     mpg_data.groupby("model_year")
     .aggregate(avg_no_of_cylinders=("cylinders", "mean"), avg_mpg=("mpg", "mean"))
@@ -654,10 +636,10 @@ cyl = (
 )
 px.scatter(data_frame=cyl, x="model_year", y="avg_no_of_cylinders", color="avg_mpg")
 
-# %% [markdown]
+
 # Newer cars have fewer no of cylinders on average.
 
-# %% [markdown]
+
 # These final graphs give us answers to a few questions we were asking.
 #
 # # Conclusions
