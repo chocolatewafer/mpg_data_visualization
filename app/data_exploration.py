@@ -13,7 +13,6 @@
 # ---
 
 import streamlit as st
-import functools
 
 # %%
 import pandas as pd
