@@ -7,13 +7,12 @@ import plotly.graph_objects as go
 import plotly.express as px
 from plotly.subplots import make_subplots
 from skimage import io
-from helper.container import st_fixed_container
 
 st.set_page_config(page_title="Data Viz", page_icon="📈", layout="wide")
 
 
-with st_fixed_container(mode="sticky", position="top", border=True):
-    st.write("This is a fixed container.")
+with st.sidebar:
+    st.button("Show code")
 
 st.markdown(
     """
