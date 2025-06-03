@@ -9,10 +9,22 @@ from plotly.subplots import make_subplots
 from skimage import io
 
 st.set_page_config(page_title="Data Viz", page_icon="📈", layout="wide")
+if "expand_code" not in st.session_state:
+    st.session_state.expand_code = False
+
+
+def show_code(lines_of_code):
+    with st.expander("See Python Code", expanded=st.session_state.expand_code):
+        st.code(lines_of_code, language="python")
 
 
 with st.sidebar:
-    st.button("Show code")
+    on = st.toggle("Show Code")
+    if on:
+        st.session_state.expand_code = True
+    else:
+        st.session_state.expand_code = False
+
 
 st.markdown(
     """
@@ -23,13 +35,12 @@ I am using Plotly and Streamlit for this task.
 """
 )
 
-st.code(
+show_code(
     """
 mpg_data = pd.read_csv('https://raw.githubusercontent.com/mwaskom/seaborn-data/refs/heads/master/mpg.csv')
 # or read from local_path../mpg.csv
 st.dataframe(mpg_data.head(10))
-""",
-    language="python",
+"""
 )
 
 mpg_data = pd.read_csv(
