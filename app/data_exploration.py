@@ -7,9 +7,13 @@ import plotly.graph_objects as go
 import plotly.express as px
 from plotly.subplots import make_subplots
 from skimage import io
+from helper.container import st_fixed_container
 
 st.set_page_config(page_title="Data Viz", page_icon="📈", layout="wide")
 
+
+with st_fixed_container(mode="sticky", position="top", border=True):
+    st.write("This is a fixed container.")
 
 st.markdown(
     """
@@ -20,12 +24,6 @@ I am using Plotly and Streamlit for this task.
 """
 )
 
-
-mpg_data = pd.read_csv(
-    "https://raw.githubusercontent.com/mwaskom/seaborn-data/refs/heads/master/mpg.csv"
-)
-# or read from data/mpg.csv
-
 st.code(
     """
 mpg_data = pd.read_csv('https://raw.githubusercontent.com/mwaskom/seaborn-data/refs/heads/master/mpg.csv')
@@ -35,23 +33,24 @@ st.dataframe(mpg_data.head(10))
     language="python",
 )
 
+mpg_data = pd.read_csv(
+    "https://raw.githubusercontent.com/mwaskom/seaborn-data/refs/heads/master/mpg.csv"
+)
 st.dataframe(mpg_data.head(10))
 st.markdown("---")
 
 st.markdown("## Reading and cleaning dataset")
-
-
 st.markdown(
     """### Initial Observation
 The car dataset has many models of cars produced across different years. The origin and engine performance metrics are listed out.
 """
 )
-
 st.markdown(
     """
 ### Check for missing values
 """
 )
+
 col1, col2 = st.columns(spec=[0.3, 0.7])
 
 with col1:
@@ -74,9 +73,9 @@ st.markdown("### Drop/Impute Data")
 st.markdown(
     "Since there are not many rows that contain null values in horsepower that are not the extremes, I decided to simply drop these data."
 )
-mpg_data.dropna(inplace=True)
 st.markdown("```mpg_data.dropna(inplace=True)```")
 
+mpg_data.dropna(inplace=True)
 mpg_data["horsepower"] = pd.to_numeric(mpg_data["horsepower"])
 
 
@@ -86,10 +85,8 @@ st.markdown(
 """
 )
 
-
-st.dataframe(mpg_data.describe())
-
 st.code("st.dataframe(mpg_data.describe())", language="python")
+st.dataframe(mpg_data.describe())
 
 
 with st.expander("See more Univariate Operations", expanded=False):
@@ -191,7 +188,6 @@ images = [
     "pugeot_504.png",
     "saab_99le.jpg",
 ]
-
 names = [
     "Powerful 3 cylinder car",
     "Newer gen 3 cylinder car",
@@ -238,14 +234,12 @@ fig.update_layout(
 st.plotly_chart(fig)
 
 
-# ## Univariate Analysis
+st.markdown("# Univariate Analysis")
+st.markdown("## Graphs and Visualizations")
 
 
-# ## Graphs and Visualizations
-
-
-px.histogram(data_frame=mpg_data, x="cylinders")
-st.code(px.histogram(data_frame=mpg_data, x="cylinders"), language="python")
+st.code('px.histogram(data_frame=mpg_data, x="cylinders")', language="python")
+st.plotly_chart(px.histogram(data_frame=mpg_data, x="cylinders"))
 
 
 st.markdown(
