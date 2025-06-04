@@ -390,7 +390,7 @@ Also worth noting is that USA has a higher fence for hp meaning that there are c
 
 st.markdown("## Bivariate analysis")
 
-st.code(
+show_code(
     """
 px.scatter(data_frame=mpg_data, x='cylinders', y = 'origin', color= 'origin')
 px.scatter(data_frame=mpg_data, x='model_year', y='mpg',facet_col='origin')
@@ -411,26 +411,29 @@ st.plotly_chart(
 )
 
 
-# In the dataset, US based cars have a higher count of cylinders, while Japanese and European cars have lower cylinders, but innovate in 3 cylinder or 5 cylinder engines.
-# This might be due to racing being more poular and prevalant in the US or due to road networks being better in the US with consumer culture demanding more powerful cars.
+st.markdown(
+    """
+In the dataset, US based cars have a higher count of cylinders, while Japanese and European cars have lower cylinders, but innovate in 3 cylinder or 5 cylinder engines.
+This might be due to racing being more poular and prevalant in the US or due to road networks being better in the US with consumer culture demanding more powerful cars.
+"""
+)
 
 
-# px.box(data_frame=mpg_data, x='mpg')
-px.scatter(data_frame=mpg_data, x="model_year", y="mpg", facet_col="origin")
-
+st.plotly_chart(
+    px.scatter(data_frame=mpg_data, x="model_year", y="mpg", facet_col="origin")
+)
+st.markdown(
+    "A trend of mpg getting better across the years can be seen in all the countries."
+)
 
 avg_group = pd.DataFrame()
 avg_group = mpg_data.groupby(by="model_year").agg(average_mpg=("mpg", "mean"))
 avg_group.reset_index()
+st.plotly_chart(px.line(data_frame=avg_group, y="average_mpg"))
 
-
-# A trend of mpg getting better across the years can be seen in all the countries.
-
-
-px.line(data_frame=avg_group, y="average_mpg")
-
-
-# Getting the ***average mpg*** for models that came out each year across all countries shows that there is actually a steady **increase** in the fuel efficiency across the years.
+st.markdown(
+    "Getting the ***average mpg*** for models that came out each year across all countries shows that there is actually a steady **increase** in the fuel efficiency across the years."
+)
 
 
 # ### Getting names of company to see the Distribution of Car according to company
