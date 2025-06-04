@@ -6,7 +6,6 @@ import plotly as plt
 import plotly.graph_objects as go
 import plotly.express as px
 from plotly.subplots import make_subplots
-from skimage import io
 
 st.set_page_config(page_title="Data Viz", page_icon="📈", layout="wide")
 if "expand_code" not in st.session_state:
@@ -327,17 +326,57 @@ To get a more complete picture, we need to perform further analysis. Let us henc
 st.plotly_chart(px.histogram(data_frame=mpg_data, y="origin", color="origin"))
 
 
-# Seems like most cars in our dataset are **USA** based and there are only two other origins i.e. **Japan** and **Europe**.
-# We can now analyze our cars categoirically based on the countries. Let us see what differences cars of each country possess.
+st.markdown(
+    "Seems like most cars in our dataset are **USA** based and there are only two other origins i.e. **Japan** and **Europe**."
+)
+st.markdown(
+    "We can now analyze our cars categoirically based on the countries. Let us see what differences cars of each country possess."
+)
 
-
-px.histogram(data_frame=mpg_data, x="model_year", facet_col="origin")
-
-
-px.box(data_frame=mpg_data, y=["mpg", "acceleration"], facet_col="origin")
-
-
-px.box(data_frame=mpg_data, y="horsepower", facet_col="origin")
+orig1, orig2, orig3, orig4 = st.tabs(
+    ["Model Year", "Miles Per Gallon", "Acceleration", "Horsepower"]
+)
+color_map = {"japan": "#c25553", "europe": "#ed7d31", "usa": "#5b9bd5"}
+orig1.plotly_chart(
+    px.histogram(
+        mpg_data,
+        x="model_year",
+        color="origin",
+        marginal="box",
+        color_discrete_map=color_map,
+        hover_data=mpg_data.columns,
+    )
+)
+orig2.plotly_chart(
+    px.histogram(
+        mpg_data,
+        x="mpg",
+        color="origin",
+        marginal="box",
+        color_discrete_map=color_map,
+        hover_data=mpg_data.columns,
+    )
+)
+orig3.plotly_chart(
+    px.histogram(
+        mpg_data,
+        x="acceleration",
+        color="origin",
+        marginal="box",
+        color_discrete_map=color_map,
+        hover_data=mpg_data.columns,
+    )
+)
+orig4.plotly_chart(
+    px.histogram(
+        mpg_data,
+        x="horsepower",
+        color="origin",
+        marginal="box",
+        color_discrete_map=color_map,
+        hover_data=mpg_data.columns,
+    )
+)
 
 
 mpg_data.groupby("origin").agg(mean_horsepower=("horsepower", "mean")).reset_index()
@@ -403,8 +442,6 @@ country_df.reset_index().sort_values(by="mean_horsepower", ascending=False).head
 
 # To gain proper insigts and explore, I wrote code to plot all values vs all other values.
 
-
-from plotly.subplots import make_subplots
 
 col_names = [
     "mpg",
