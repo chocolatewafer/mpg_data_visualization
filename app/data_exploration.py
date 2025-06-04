@@ -71,7 +71,7 @@ with col1:
 with col2:
 
     temp = mpg_data[mpg_data.isna().any(axis=1)]
-    selected_column = st.selectbox("", options="horsepower")
+    selected_column = "horsepower"
     df_styled = temp.style.set_properties(
         subset=[selected_column], **{"background-color": "#FF474C"}
     )
@@ -83,7 +83,7 @@ st.markdown("### Drop/Impute Data")
 st.markdown(
     "Since there are not many rows that contain null values in horsepower that are not the extremes, I decided to simply drop these data."
 )
-st.markdown("```mpg_data.dropna(inplace=True)```")
+show_code("mpg_data.dropna(inplace=True)")
 
 mpg_data.dropna(inplace=True)
 mpg_data["horsepower"] = pd.to_numeric(mpg_data["horsepower"])
@@ -199,7 +199,7 @@ show_code(
     """
 )
 
-tab1, tab2, tab3 = st.tabs(["Cylinders", "Mpg", "Acceleration"])
+tab1, tab2, tab3 = st.tabs(["Horsepower", "Mpg", "Acceleration"])
 tab1.plotly_chart(
     px.box(
         data_frame=mpg_data.sort_values(by="cylinders"),
@@ -229,9 +229,6 @@ tab3.plotly_chart(
 st.markdown("### Inspecting Outliers")
 
 
-st.dataframe(mpg_data[mpg_data.horsepower == 165])
-
-
 mpg_data[mpg_data.horsepower == 230]
 
 
@@ -259,9 +256,67 @@ There is a varied mpg and horsepower observed in 8 cylinder cars meaning there a
 There are some outliers is both mpg and horsepower graphs.
 
 ### Muscle Cars
+"""
+)
+with st.popover("High horsepower cars", use_container_width=True):
+    df = mpg_data[mpg_data.horsepower > 220]
+    st.dataframe(
+        df.style.apply(
+            lambda x: [
+                "background-color: lightgreen; color: black"
+                if x.name == "horsepower"
+                else ""
+                for _ in x
+            ]
+        )
+    )
+with st.popover(
+    "6 cylinder Buick regal in comparision to other 8 cylinder cars",
+    use_container_width=True,
+):
+    df = mpg_data[mpg_data.horsepower == 165]
+    st.dataframe(
+        df.style.apply(
+            lambda x: [
+                "background-color: lightgreen; color: black"
+                if x.name == "horsepower"
+                else ""
+                for _ in x
+            ]
+        )
+    )
+
+st.markdown(
+    """
 The 6 cylinder **buick regal sport coupe (turbo)** is a muscle car giving a very high horsepower and comes in line with other average 8 cylinder cars. Similarly the 230hp **pontiac grand prix** is a 8 cylinder beast of a muscle car which explains the very high horsepower.
 
 ### Efficient Cars
+"""
+)
+with st.popover("6 cylinder cars with good efficiency", use_container_width=True):
+    df = mpg_data[(mpg_data.mpg > 30) & (mpg_data.cylinders == 6)]
+    st.dataframe(
+        df.style.apply(
+            lambda x: [
+                "background-color: lightgreen; color: black" if x.name == "mpg" else ""
+                for _ in x
+            ]
+        )
+    )
+
+with st.popover("8 cylinder cars with good efficiency", use_container_width=True):
+    df = mpg_data.loc[(mpg_data.mpg > 20) & (mpg_data.cylinders == 8)]
+    st.dataframe(
+        df.style.apply(
+            lambda x: [
+                "background-color: lightgreen; color: black" if x.name == "mpg" else ""
+                for _ in x
+            ]
+        )
+    )
+
+st.markdown(
+    """
 There are certain economy or diesel version of cars that make them exceptionally fuel efficient like the 6 cylinder **oldsmobile cutlass ciera (diesel)** or the 8 cylinder **oldsmobile cutlass ls**
 
 To get a more complete picture, we need to perform further analysis. Let us hence try to gather more insights from our data regarding engine performance with respect to number of cylinders, displacement, weight and country of origin.
@@ -269,7 +324,7 @@ To get a more complete picture, we need to perform further analysis. Let us henc
 )
 
 
-px.histogram(data_frame=mpg_data, y="origin", color="origin")
+st.plotly_chart(px.histogram(data_frame=mpg_data, y="origin", color="origin"))
 
 
 # Seems like most cars in our dataset are **USA** based and there are only two other origins i.e. **Japan** and **Europe**.
