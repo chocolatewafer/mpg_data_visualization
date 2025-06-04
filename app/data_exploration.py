@@ -436,7 +436,21 @@ st.markdown(
 )
 
 
-# ### Getting names of company to see the Distribution of Car according to company
+st.markdown(
+    "### Getting names of company to see the Distribution of Car according to company"
+)
+
+show_code(
+    """
+def get_first_name(x):
+    full_name = x.split(" ")
+    company = full_name[0]
+    return company
+mpg_data["company"] = mpg_data["name"].apply(lambda x: get_first_name(x))
+company_hist = px.histogram(data_frame=mpg_data, x="company")
+company_hist.show()
+"""
+)
 
 
 def get_first_name(x):
@@ -446,18 +460,37 @@ def get_first_name(x):
 
 
 mpg_data["company"] = mpg_data["name"].apply(lambda x: get_first_name(x))
+st.plotly_chart(px.histogram(data_frame=mpg_data, x="company"))
 
 
-company_hist = px.histogram(data_frame=mpg_data, x="company")
-company_hist.show()
-
-
-country_df = mpg_data.groupby("company").agg(mean_mpg=("mpg", "mean"))
-country_df.reset_index().sort_values(by="mean_mpg", ascending=False).head()
-
+show_code(
+    """
+country_df= mpg_data.groupby('company').agg(mean_mpg = ('mpg','mean'))
+country_df.reset_index().sort_values(by='mean_mpg', ascending=False).head()
 
 country_df = mpg_data.groupby("company").agg(mean_horsepower=("horsepower", "mean"))
 country_df.reset_index().sort_values(by="mean_horsepower", ascending=False).head()
+"""
+)
+
+country_df = mpg_data.groupby("company").agg(mean_mpg=("mpg", "mean"))
+st.dataframe(
+    country_df.reset_index().sort_values(by="mean_mpg", ascending=False).head()
+)
+
+
+country_df = mpg_data.groupby("company").agg(mean_horsepower=("horsepower", "mean"))
+st.dataframe(
+    country_df.reset_index().sort_values(by="mean_horsepower", ascending=False).head()
+)
+
+st.markdown(
+    """
+Company based breakdown shows Volkswagen has a good fuel efficiency on average.
+Similary Harvester International has a pretty high horse power, which makes sense as it is a truck.
+The US companies like Chrysler and Caldillac have very high horsepower cars on general
+"""
+)
 
 
 # # Bivariate Analysis of Numerical Data
