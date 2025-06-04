@@ -98,14 +98,20 @@ st.markdown(
 st.code("st.dataframe(mpg_data.describe())", language="python")
 st.dataframe(mpg_data.describe())
 
-
+st.markdown("### Extreme values: Max and Min")
 show_code(
     """mpg_data.loc[mpg_data["horsepower"] == mpg_data["horsepower"].max()]
+    mpg_data.loc[mpg_data["horsepower"] == mpg_data["horsepower"].min()]
 mpg_data.loc[mpg_data["acceleration"] == mpg_data["acceleration"].max()]
+mpg_data.loc[mpg_data["acceleration"] == mpg_data["acceleration"].min()]
 mpg_data.loc[mpg_data["mpg"] == mpg_data["mpg"].max()]
 mpg_data.loc[mpg_data["mpg"] == mpg_data["mpg"].min()]
+mpg_data.loc[mpg_data["model_year"] == mpg_data["model_year"].max()]
+mpg_data.loc[mpg_data["model_year"] == mpg_data["model_year"].min()]
 mpg_data.loc[mpg_data["cylinders"] == 3]"""
 )
+
+
 selected_column = st.selectbox(
     "Field", options=["horsepower", "mpg", "acceleration", "model_year"]
 )
