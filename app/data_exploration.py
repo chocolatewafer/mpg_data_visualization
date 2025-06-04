@@ -106,52 +106,27 @@ mpg_data.loc[mpg_data["mpg"] == mpg_data["mpg"].max()]
 mpg_data.loc[mpg_data["mpg"] == mpg_data["mpg"].min()]
 mpg_data.loc[mpg_data["cylinders"] == 3]"""
 )
-st.markdown(
-    """```mpg_data.loc[mpg_data['horsepower'] == mpg_data['horsepower'].max()]```"""
+selected_column = st.selectbox(
+    "Field", options=["horsepower", "mpg", "acceleration", "model_year"]
 )
-st.markdown(
-    """```mpg_data.loc[mpg_data['acceleration'] == mpg_data['acceleration'].max()]```"""
-)
-st.markdown("""```mpg_data.loc[mpg_data['mpg'] == mpg_data['mpg'].max()]```""")
-st.markdown("""```mpg_data.loc[mpg_data['mpg'] == mpg_data['mpg'].min()]```""")
-st.markdown("""```mpg_data.loc[mpg_data['cylinders']==3]```""")
+if selected_column == "model_year":
+    st.write("Newest cars")
+else:
+    st.write("Max value for:", selected_column)
+st.dataframe(mpg_data.loc[mpg_data[selected_column] == mpg_data[selected_column].max()])
+if selected_column == "model_year":
+    st.write("Oldest cars")
+else:
+    st.write("Min value for:", selected_column)
+st.dataframe(mpg_data.loc[mpg_data[selected_column] == mpg_data[selected_column].min()])
 
-c1, c2, c3, c4, c5 = st.columns(5)
-with c1:
-    st.markdown(
-        """```mpg_data.loc[mpg_data['cylinders']==3].sort_values(by= 'horsepower',ascending=False).iloc[0]```"""
-    )
-    mpg_data.loc[mpg_data["cylinders"] == 3].sort_values(
+cylinder_val = st.slider("No of cylinders:", max_value=8, min_value=1, value=4)
+if not cylinder_val == 7:
+    mpg_data.loc[mpg_data["cylinders"] == cylinder_val].sort_values(
         by="horsepower", ascending=False
     ).iloc[0]
-with c2:
-    st.markdown(
-        """```mpg_data.loc[mpg_data['cylinders']==4].sort_values(by= 'horsepower',ascending=False).iloc[0]```"""
-    )
-    mpg_data.loc[mpg_data["cylinders"] == 4].sort_values(
-        by="horsepower", ascending=False
-    ).iloc[0]
-with c3:
-    st.markdown(
-        """```mpg_data.loc[mpg_data['cylinders']==5].sort_values(by= 'horsepower',ascending=False).iloc[0]```"""
-    )
-    mpg_data.loc[mpg_data["cylinders"] == 5].sort_values(
-        by="horsepower", ascending=False
-    ).iloc[0]
-with c4:
-    st.markdown(
-        """```mpg_data.loc[mpg_data['cylinders']==6].sort_values(by= 'horsepower',ascending=False).iloc[0]```"""
-    )
-    mpg_data.loc[mpg_data["cylinders"] == 6].sort_values(
-        by="horsepower", ascending=False
-    ).iloc[0]
-with c5:
-    st.markdown(
-        """```mpg_data.loc[mpg_data['cylinders']==8].sort_values(by= 'horsepower',ascending=False).iloc[0]```"""
-    )
-    mpg_data.loc[mpg_data["cylinders"] == 8].sort_values(
-        by="horsepower", ascending=False
-    ).iloc[0]
+else:
+    st.write("No Cars with 7 cylinders!")
 
 
 col1, col2 = st.columns(spec=[0.5, 0.5])
@@ -259,9 +234,10 @@ mpg_data[(mpg_data.mpg == 38) & (mpg_data.cylinders == 6)]
 mpg_data[(mpg_data.mpg == 26.6) & (mpg_data.cylinders == 8)]
 
 
-### Observations
 st.markdown(
     """
+### Observations
+
 From these two graphs we can have some insights as to how:
 - **4 cylinder** cars have lower horsepower but are more fuel efficient.
 - **6 cylinder** cars seems to have a balanced horsepower and fuel consumption.
@@ -280,7 +256,6 @@ The 6 cylinder **buick regal sport coupe (turbo)** is a muscle car giving a very
 
 ### Efficient Cars
 There are certain economy or diesel version of cars that make them exceptionally fuel efficient like the 6 cylinder **oldsmobile cutlass ciera (diesel)** or the 8 cylinder **oldsmobile cutlass ls**
-
 
 To get a more complete picture, we need to perform further analysis. Let us hence try to gather more insights from our data regarding engine performance with respect to number of cylinders, displacement, weight and country of origin.
 """
