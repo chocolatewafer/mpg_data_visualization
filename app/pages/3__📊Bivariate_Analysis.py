@@ -190,13 +190,20 @@ From these graphs, we can make a number of Observations.
 - Acceleration and mpg do not have a obvious relationship due to a highly scattered plot. We do see a proportional trend, which is quite counter intuitive.
 - As the years progress, cars are getting more fuel efficient.
 
+---
+
 ### Observations: others vs Cylinders
 
 We can see that more number of **cylinder** means higher **horse power**, more **displacement** and also a **heavier engine**.
+
 There is no clear relationship between the model year and the number of cylinders, indicating that cars with varying engine types were produced across all years.
+
 Checking out the **4 cylinder** engines, we observe that they give great fuel efficiency with light engines but with lower horse power. This could also mean they are both cheaper to manufacture and to use. This could explain why there are greater number of cars with 4 cylinder engines produced.
+
 We can not however, say for sure that these 4 cylinder cars are the most poular or most bought cars though. For that, we would need the sales data of these models to be certain.
 **6 cylinder engines** have a good balance of efficiency and horsepower. **8 cylinder engines** pack a punch with higher horsepower but guzzle a lot of fuel. The **8 cylinder** engines are some of the most powerful engines with very high horsepower. This makes sense as more cylinders will displace more fuel, producing more power but meaning lower fuel efficiency. At the same time bigger and heavier engines are needed to accomodate more number of cylinders.
+
+---
 
 ### Observation: others vs horsepower &  others vs displacement
 
