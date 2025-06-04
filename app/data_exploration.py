@@ -199,33 +199,34 @@ show_code(
     """
 )
 
-st.plotly_chart(
+tab1, tab2, tab3 = st.tabs(["Cylinders", "Mpg", "Acceleration"])
+tab1.plotly_chart(
     px.box(
         data_frame=mpg_data.sort_values(by="cylinders"),
         y=["horsepower"],
         facet_col="cylinders",
+        color="cylinders",
     )
 )
-
-
-st.code(
+tab2.plotly_chart(
     px.box(
         data_frame=mpg_data.sort_values(by="cylinders"),
         y=["mpg"],
         facet_col="cylinders",
-    ),
-    language="python",
+        color="cylinders",
+    )
 )
-st.plotly_chart(
+tab3.plotly_chart(
     px.box(
         data_frame=mpg_data.sort_values(by="cylinders"),
-        y=["mpg"],
+        y=["acceleration"],
         facet_col="cylinders",
+        color="cylinders",
     )
 )
 
 
-# ### Inspecting Outliers
+st.markdown("### Inspecting Outliers")
 
 
 st.dataframe(mpg_data[mpg_data.horsepower == 165])
