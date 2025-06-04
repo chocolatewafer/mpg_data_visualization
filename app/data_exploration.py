@@ -226,15 +226,13 @@ tab3.plotly_chart(
 
 
 st.markdown("### Inspecting Outliers")
-
-
+show_code(
+    """
+mpg_data[mpg_data.horsepower == 165 ]
 mpg_data[mpg_data.horsepower == 230]
-
-
 mpg_data[(mpg_data.mpg == 38) & (mpg_data.cylinders == 6)]
-
-
-mpg_data[(mpg_data.mpg == 26.6) & (mpg_data.cylinders == 8)]
+mpg_data[(mpg_data.mpg == 26.6) & (mpg_data.cylinders == 8)]"""
+)
 
 
 st.markdown(
@@ -323,7 +321,12 @@ To get a more complete picture, we need to perform further analysis. Let us henc
 )
 
 
-st.plotly_chart(px.histogram(data_frame=mpg_data, y="origin", color="origin"))
+color_map = {"japan": "#c25553", "europe": "#ed7d31", "usa": "#5b9bd5"}
+st.plotly_chart(
+    px.histogram(
+        data_frame=mpg_data, y="origin", color="origin", color_discrete_map=color_map
+    )
+)
 
 
 st.markdown(
@@ -336,7 +339,7 @@ st.markdown(
 orig1, orig2, orig3, orig4 = st.tabs(
     ["Model Year", "Miles Per Gallon", "Acceleration", "Horsepower"]
 )
-color_map = {"japan": "#c25553", "europe": "#ed7d31", "usa": "#5b9bd5"}
+
 orig1.plotly_chart(
     px.histogram(
         mpg_data,
@@ -379,16 +382,24 @@ orig4.plotly_chart(
 )
 
 
-mpg_data.groupby("origin").agg(mean_horsepower=("horsepower", "mean")).reset_index()
+st.plotly_chart(
+    """This shows us that Japanese cars are the most fuel efficient while USA has on average, more powerful cars.
+Also worth noting is that USA has a higher fence for hp meaning that there are car variants that are very powerful (muscle cars) which we see lacking in other countires."""
+)
 
 
-# This shows us that Japanese cars are the most fuel efficient while USA has on average, more powerful cars. Also worth noting is that USA has a higher fence for hp meaning that there are car variants that are very powerful (muscle cars) which we see lacking in other countires.
+st.plotly_chart("## Bivariate analysis")
 
 
-# ## Bivariate analysis
-
-
-px.scatter(data_frame=mpg_data, x="cylinders", y="origin", color="origin")
+st.plotly_chart(
+    px.scatter(
+        data_frame=mpg_data,
+        x="cylinders",
+        y="origin",
+        color="origin",
+        color_discrete_map=color_map,
+    )
+)
 
 
 # In the dataset, US based cars have a higher count of cylinders, while Japanese and European cars have lower cylinders, but innovate in 3 cylinder or 5 cylinder engines.
