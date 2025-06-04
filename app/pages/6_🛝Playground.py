@@ -3,22 +3,37 @@ import streamlit as st
 import plotly.graph_objects as go
 import plotly.express as px
 from plotly.subplots import make_subplots
-from Data_exploration import mpg_data
-
-st.write(mpg_data.isna().any())
+from data.dataframe import mpg_data
 
 st.set_page_config(page_title="Playground", page_icon="🛝", layout="wide")
 
-st.plotly_chart(
-    px.scatter(data_frame=mpg_data, x="horsepower", y="mpg", color="model_year")
-)
+col_names = [
+    "mpg",
+    "cylinders",
+    "displacement",
+    "horsepower",
+    "weight",
+    "acceleration",
+    "model_year",
+]
+
+
+ch1, ch2, ch3 = st.columns(spec=[0.3, 0.3, 0.3])
+
+with ch1:
+    x = st.selectbox("x-axis", col_names)
+with ch2:
+    y = st.selectbox("y-axis", col_names)
+with ch3:
+    color = st.selectbox("colour", [None] + col_names)
+
+st.plotly_chart(px.scatter(data_frame=mpg_data, x=x, y=y, color=color))
 
 
 st.markdown("---")
 
 if "selected" not in st.session_state:
     st.session_state.selected = "mpg"
-col_names = mpg_data.columns
 
 selected = st.selectbox("Plot a graph of Others vs:", col_names)
 fig = make_subplots(rows=3, cols=2)

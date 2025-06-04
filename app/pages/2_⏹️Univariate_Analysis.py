@@ -1,7 +1,9 @@
 import streamlit as st
 import plotly.express as px
 
-from Data_exploration import mpg_data, color_map
+from data.dataframe import mpg_data
+
+color_map = {"japan": "#c25553", "europe": "#ed7d31", "usa": "#5b9bd5"}
 
 st.set_page_config(page_title="Univariate", page_icon="⏹️", layout="wide")
 if "expand_code" not in st.session_state:

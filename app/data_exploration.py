@@ -20,7 +20,6 @@ with st.sidebar:
     else:
         st.session_state.expand_code = False
 
-color_map = {"japan": "#c25553", "europe": "#ed7d31", "usa": "#5b9bd5"}
 
 st.markdown(
     """

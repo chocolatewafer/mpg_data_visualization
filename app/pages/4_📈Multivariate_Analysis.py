@@ -2,7 +2,7 @@ import streamlit as st
 
 import plotly.express as px
 
-from Data_exploration import mpg_data
+from data.dataframe import mpg_data
 
 st.set_page_config(page_title="Multivariate", page_icon="📈", layout="wide")
 if "expand_code" not in st.session_state:
