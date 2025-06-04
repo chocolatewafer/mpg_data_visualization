@@ -5,7 +5,7 @@ import plotly.graph_objects as go
 import plotly.express as px
 from plotly.subplots import make_subplots
 
-from Data_exploration import mpg_data
+from data.dataframe import mpg_data
 
 color_map = {"japan": "#c25553", "europe": "#ed7d31", "usa": "#5b9bd5"}
 
