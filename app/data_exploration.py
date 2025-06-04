@@ -191,14 +191,14 @@ One final consideration to this line of thinking should be that the data collect
 )
 
 
-st.code(
-    """px.box(
-        data_frame=mpg_data.sort_values(by="cylinders"),
-        y=["horsepower"],
-        facet_col="cylinders",
-    )""",
-    language="python",
+show_code(
+    """
+    px.box(data_frame=mpg_data.sort_values(by="cylinders"),y=["horsepower"],facet_col="cylinders")
+    px.box(data_frame=mpg_data.sort_values(by="cylinders"),y=["horsepower"],facet_col="mpg")
+    px.box(data_frame=mpg_data.sort_values(by="cylinders"),y=["horsepower"],facet_col="acceleration")
+    """
 )
+
 st.plotly_chart(
     px.box(
         data_frame=mpg_data.sort_values(by="cylinders"),
