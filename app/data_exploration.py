@@ -658,7 +658,13 @@ cyl = (
     .reset_index()
 )
 st.plotly_chart(
-    px.scatter(data_frame=cyl, x="model_year", y="avg_no_of_cylinders", color="avg_mpg")
+    px.scatter(
+        data_frame=cyl,
+        x="model_year",
+        y="avg_no_of_cylinders",
+        color="avg_mpg",
+        trendline="ols",
+    )
 )
 
 
