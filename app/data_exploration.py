@@ -493,10 +493,12 @@ The US companies like Chrysler and Caldillac have very high horsepower cars on g
 )
 
 
-# # Bivariate Analysis of Numerical Data
+st.markdown("# Bivariate Analysis of Numerical Data")
 
 
-# To gain proper insigts and explore, I wrote code to plot all values vs all other values.
+st.markdown(
+    "To gain proper insigts and explore, I wrote code to plot all values vs all other values."
+)
 
 
 col_names = [
@@ -540,8 +542,6 @@ fig.show()
 # - Acceleration and mpg do not have a obvious relationship due to a highly scattered plot. We do see a proportional trend, which is quite counter intuitive.
 # - As the years progress, cars are getting more fuel efficient.
 
-
-from plotly.subplots import make_subplots
 
 col_names = [
     "cylinders",
