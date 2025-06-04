@@ -113,25 +113,32 @@ mpg_data.loc[mpg_data["cylinders"] == 3]"""
 selected_column = st.selectbox(
     "Field", options=["horsepower", "mpg", "acceleration", "model_year"]
 )
+
 if selected_column == "model_year":
     st.write("Newest cars")
 else:
     st.write("Max value for:", selected_column)
 st.dataframe(mpg_data.loc[mpg_data[selected_column] == mpg_data[selected_column].max()])
+
 if selected_column == "model_year":
     st.write("Oldest cars")
 else:
     st.write("Min value for:", selected_column)
 st.dataframe(mpg_data.loc[mpg_data[selected_column] == mpg_data[selected_column].min()])
 
-cylinder_val = st.slider("No of cylinders:", max_value=8, min_value=1, value=4)
+
+cylinder_val = st.slider("No of cylinders:", max_value=8, min_value=3, value=4)
 if not cylinder_val == 7:
-    mpg_data.loc[mpg_data["cylinders"] == cylinder_val].sort_values(
-        by="horsepower", ascending=False
-    ).iloc[0]
+    series = (
+        mpg_data.loc[mpg_data["cylinders"] == cylinder_val]
+        .sort_values(by="horsepower", ascending=False)
+        .iloc[0]
+    )
+    st.dataframe(pd.DataFrame([series]))
 else:
     st.write("No Cars with 7 cylinders!")
 
+st.markdown("---")
 
 col1, col2 = st.columns(spec=[0.5, 0.5])
 with col1:
