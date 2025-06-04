@@ -74,33 +74,37 @@ st.markdown("# Cars in the Dataset")
 col1, col2 = st.columns(spec=[0.5, 0.5])
 with col1:
     st.image(
-        image="assets/1977_mazda_rx-4.jpg",
+        image="../assets/1977_mazda_rx-4.jpg",
         caption="Powerful 3 cylinder car: 1977 Mazda RX-4",
     )
     st.image(
-        image="assets/1980_mazda_rx-7.jpg",
+        image="../assets/1980_mazda_rx-7.jpg",
         caption="Newer gen 3 cylinder car: 1980 Mazda RX-7",
     )
-    st.image(image="assets/audi_5000.jpg", caption="Powerful 5 cylinder car: Audi 5000")
     st.image(
-        image="assets/buick_regal_sport_coupe.jpg",
+        image="../assets/audi_5000.jpg", caption="Powerful 5 cylinder car: Audi 5000"
+    )
+    st.image(
+        image="../assets/buick_regal_sport_coupe.jpg",
         caption='Powerful 6 cylinder car: Buick Regal Sport "coupe"',
     )
-    st.image(image="assets/saab_99le.jpg", caption="Powerful 4 cylinder car: Saab 91LE")
+    st.image(
+        image="../assets/saab_99le.jpg", caption="Powerful 4 cylinder car: Saab 91LE"
+    )
 with col2:
     st.image(
-        image="assets/harvester_intl_1200D.png",
+        image="../assets/harvester_intl_1200D.png",
         caption="Least fuel efficient in the dataset: Harvester Intl 1200D",
     )
     st.image(
-        image="assets/mazda_glc.png",
+        image="../assets/mazda_glc.png",
         caption="Most fuel efficient in the dataset: Mazda GLC",
     )
     st.image(
-        image="assets/pontiac_GP.jpg",
+        image="../assets/pontiac_GP.jpg",
         caption="Highest Horsepower in the dataset: Pontiac GP",
     )
     st.image(
-        image="assets/pugeot_504.png",
+        image="../assets/pugeot_504.png",
         caption="Highest Acceleration in the dataset: Pugeot 504",
     )
