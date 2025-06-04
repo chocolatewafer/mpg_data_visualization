@@ -99,149 +99,94 @@ st.code("st.dataframe(mpg_data.describe())", language="python")
 st.dataframe(mpg_data.describe())
 
 
-with st.expander("See more Univariate Operations", expanded=False):
-    st.markdown(
-        """```mpg_data.loc[mpg_data['horsepower'] == mpg_data['horsepower'].max()]```"""
-    )
-    mpg_data.loc[mpg_data["horsepower"] == mpg_data["horsepower"].max()]
-    st.markdown(
-        """```mpg_data.loc[mpg_data['acceleration'] == mpg_data['acceleration'].max()]```"""
-    )
-    mpg_data.loc[mpg_data["acceleration"] == mpg_data["acceleration"].max()]
-    st.markdown("""```mpg_data.loc[mpg_data['mpg'] == mpg_data['mpg'].max()]```""")
-    mpg_data.loc[mpg_data["mpg"] == mpg_data["mpg"].max()]
-    st.markdown("""```mpg_data.loc[mpg_data['mpg'] == mpg_data['mpg'].min()]```""")
-    mpg_data.loc[mpg_data["mpg"] == mpg_data["mpg"].min()]
-    st.markdown("""```mpg_data.loc[mpg_data['cylinders']==3]```""")
-    mpg_data.loc[mpg_data["cylinders"] == 3]
-
-    c1, c2, c3, c4, c5 = st.columns(5)
-    with c1:
-        st.markdown(
-            """```mpg_data.loc[mpg_data['cylinders']==3].sort_values(by= 'horsepower',ascending=False).iloc[0]```"""
-        )
-        mpg_data.loc[mpg_data["cylinders"] == 3].sort_values(
-            by="horsepower", ascending=False
-        ).iloc[0]
-    with c2:
-        st.markdown(
-            """```mpg_data.loc[mpg_data['cylinders']==4].sort_values(by= 'horsepower',ascending=False).iloc[0]```"""
-        )
-        mpg_data.loc[mpg_data["cylinders"] == 4].sort_values(
-            by="horsepower", ascending=False
-        ).iloc[0]
-    with c3:
-        st.markdown(
-            """```mpg_data.loc[mpg_data['cylinders']==5].sort_values(by= 'horsepower',ascending=False).iloc[0]```"""
-        )
-        mpg_data.loc[mpg_data["cylinders"] == 5].sort_values(
-            by="horsepower", ascending=False
-        ).iloc[0]
-    with c4:
-        st.markdown(
-            """```mpg_data.loc[mpg_data['cylinders']==6].sort_values(by= 'horsepower',ascending=False).iloc[0]```"""
-        )
-        mpg_data.loc[mpg_data["cylinders"] == 6].sort_values(
-            by="horsepower", ascending=False
-        ).iloc[0]
-    with c5:
-        st.markdown(
-            """```mpg_data.loc[mpg_data['cylinders']==8].sort_values(by= 'horsepower',ascending=False).iloc[0]```"""
-        )
-        mpg_data.loc[mpg_data["cylinders"] == 8].sort_values(
-            by="horsepower", ascending=False
-        ).iloc[0]
-
-
-with st.expander(
-    label="Python Code for Plotting Car Category Images in a Subplot Grid using Plotly"
-):
-    st.code(
-        """
-    path = "assets/"
-
-    images = ['1977_mazda_rx-4.jpg', '1980_mazda_rx-7.jpg', 'audi_5000.jpg',
-            'buick_regal_sport_coupe.jpg', 'harvester_intl_1200D.png',
-            'mazda_glc.png', 'pontiac_GP.jpg', 'pugeot_504.png', 'saab_99le.jpg']
-
-    names = ['Powerful 3 cylinder car','Newer gen 3 cylinder car','Powerful 5 cylinder car',
-            'Powerful 6 cylinder car','Least fuel efficient in the dataset',
-            'Most fuel efficient in the dataset','Highest Horsepower in the dataset',
-            'Highest acceleration in the dataset','Powerful 4 cylinder car'
-            ]
-    fig = make_subplots(rows=5, cols=2)
-    subplots =  [(1,1),(1,2),(2,1),(2,2),(3,1),(3,2),(4,1),(4,2),(5,1),(5,2)]
-
-    for i in range(len(images)):
-        row,cols=subplots[i]
-        img = io.imread(path + images[i])
-        fig.add_trace(go.Image(z=img), row=row, col=cols)
-        fig.update_xaxes(title_text = f"{names[i]} : {images[i].split('.')[0]}", row= row, col=cols, showticklabels=False)
-        fig.update_yaxes(showticklabels=False)
-    # Layout
-    fig.update_layout(title_text="Cars of different Categories", height=int(1920*0.75), width=int(1440*0.75))
-    fig.show()
-    """,
-        language="python",
-    )
-
-path = "assets/"
-
-images = [
-    "1977_mazda_rx-4.jpg",
-    "1980_mazda_rx-7.jpg",
-    "audi_5000.jpg",
-    "buick_regal_sport_coupe.jpg",
-    "harvester_intl_1200D.png",
-    "mazda_glc.png",
-    "pontiac_GP.jpg",
-    "pugeot_504.png",
-    "saab_99le.jpg",
-]
-names = [
-    "Powerful 3 cylinder car",
-    "Newer gen 3 cylinder car",
-    "Powerful 5 cylinder car",
-    "Powerful 6 cylinder car",
-    "Least fuel efficient in the dataset",
-    "Most fuel efficient in the dataset",
-    "Highest Horsepower in the dataset",
-    "Highest acceleration in the dataset",
-    "Powerful 4 cylinder car",
-]
-fig = make_subplots(rows=5, cols=2)
-subplots = [
-    (1, 1),
-    (1, 2),
-    (2, 1),
-    (2, 2),
-    (3, 1),
-    (3, 2),
-    (4, 1),
-    (4, 2),
-    (5, 1),
-    (5, 2),
-]
-
-for i in range(len(images)):
-    row, cols = subplots[i]
-    img = io.imread(path + images[i])
-    fig.add_trace(go.Image(z=img), row=row, col=cols)
-    fig.update_xaxes(
-        title_text=f"{names[i]} : {images[i].split('.')[0]}",
-        row=row,
-        col=cols,
-        showticklabels=False,
-    )
-    fig.update_yaxes(showticklabels=False)
-# Layout
-fig.update_layout(
-    title_text="Cars of different Categories",
-    height=int(1920 * 0.75),
-    width=int(1440 * 0.75),
+show_code(
+    """mpg_data.loc[mpg_data["horsepower"] == mpg_data["horsepower"].max()]
+mpg_data.loc[mpg_data["acceleration"] == mpg_data["acceleration"].max()]
+mpg_data.loc[mpg_data["mpg"] == mpg_data["mpg"].max()]
+mpg_data.loc[mpg_data["mpg"] == mpg_data["mpg"].min()]
+mpg_data.loc[mpg_data["cylinders"] == 3]"""
 )
-# fig.show()
-st.plotly_chart(fig)
+st.markdown(
+    """```mpg_data.loc[mpg_data['horsepower'] == mpg_data['horsepower'].max()]```"""
+)
+st.markdown(
+    """```mpg_data.loc[mpg_data['acceleration'] == mpg_data['acceleration'].max()]```"""
+)
+st.markdown("""```mpg_data.loc[mpg_data['mpg'] == mpg_data['mpg'].max()]```""")
+st.markdown("""```mpg_data.loc[mpg_data['mpg'] == mpg_data['mpg'].min()]```""")
+st.markdown("""```mpg_data.loc[mpg_data['cylinders']==3]```""")
+
+c1, c2, c3, c4, c5 = st.columns(5)
+with c1:
+    st.markdown(
+        """```mpg_data.loc[mpg_data['cylinders']==3].sort_values(by= 'horsepower',ascending=False).iloc[0]```"""
+    )
+    mpg_data.loc[mpg_data["cylinders"] == 3].sort_values(
+        by="horsepower", ascending=False
+    ).iloc[0]
+with c2:
+    st.markdown(
+        """```mpg_data.loc[mpg_data['cylinders']==4].sort_values(by= 'horsepower',ascending=False).iloc[0]```"""
+    )
+    mpg_data.loc[mpg_data["cylinders"] == 4].sort_values(
+        by="horsepower", ascending=False
+    ).iloc[0]
+with c3:
+    st.markdown(
+        """```mpg_data.loc[mpg_data['cylinders']==5].sort_values(by= 'horsepower',ascending=False).iloc[0]```"""
+    )
+    mpg_data.loc[mpg_data["cylinders"] == 5].sort_values(
+        by="horsepower", ascending=False
+    ).iloc[0]
+with c4:
+    st.markdown(
+        """```mpg_data.loc[mpg_data['cylinders']==6].sort_values(by= 'horsepower',ascending=False).iloc[0]```"""
+    )
+    mpg_data.loc[mpg_data["cylinders"] == 6].sort_values(
+        by="horsepower", ascending=False
+    ).iloc[0]
+with c5:
+    st.markdown(
+        """```mpg_data.loc[mpg_data['cylinders']==8].sort_values(by= 'horsepower',ascending=False).iloc[0]```"""
+    )
+    mpg_data.loc[mpg_data["cylinders"] == 8].sort_values(
+        by="horsepower", ascending=False
+    ).iloc[0]
+
+
+col1, col2 = st.columns(spec=[0.5, 0.5])
+with col1:
+    st.image(
+        image="assets/1977_mazda_rx-4.jpg",
+        caption="Powerful 3 cylinder car: 1977 Mazda RX-4",
+    )
+    st.image(
+        image="assets/1980_mazda_rx-7.jpg",
+        caption="Newer gen 3 cylinder car: 1980 Mazda RX-7",
+    )
+    st.image(image="assets/audi_5000.jpg", caption="Powerful 5 cylinder car: Audi 5000")
+    st.image(
+        image="assets/buick_regal_sport_coupe.jpg",
+        caption='Powerful 6 cylinder car: Buick Regal Sport "coupe"',
+    )
+    st.image(image="assets/saab_99le.jpg", caption="Powerful 4 cylinder car: Saab 91LE")
+with col2:
+    st.image(
+        image="assets/harvester_intl_1200D.png",
+        caption="Least fuel efficient in the dataset: Harvester Intl 1200D",
+    )
+    st.image(
+        image="assets/mazda_glc.png",
+        caption="Most fuel efficient in the dataset: Mazda GLC",
+    )
+    st.image(
+        image="assets/pontiac_GP.jpg",
+        caption="Highest Horsepower in the dataset: Pontiac GP",
+    )
+    st.image(
+        image="assets/pugeot_504.png",
+        caption="Highest Acceleration in the dataset: Pugeot 504",
+    )
 
 
 st.markdown("# Univariate Analysis")
