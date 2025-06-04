@@ -100,7 +100,7 @@ st.dataframe(mpg_data.describe())
 st.markdown("### Extreme values: Max and Min")
 show_code(
     """mpg_data.loc[mpg_data["horsepower"] == mpg_data["horsepower"].max()]
-    mpg_data.loc[mpg_data["horsepower"] == mpg_data["horsepower"].min()]
+mpg_data.loc[mpg_data["horsepower"] == mpg_data["horsepower"].min()]
 mpg_data.loc[mpg_data["acceleration"] == mpg_data["acceleration"].max()]
 mpg_data.loc[mpg_data["acceleration"] == mpg_data["acceleration"].min()]
 mpg_data.loc[mpg_data["mpg"] == mpg_data["mpg"].max()]
@@ -382,14 +382,23 @@ orig4.plotly_chart(
 )
 
 
-st.plotly_chart(
+st.markdown(
     """This shows us that Japanese cars are the most fuel efficient while USA has on average, more powerful cars.
 Also worth noting is that USA has a higher fence for hp meaning that there are car variants that are very powerful (muscle cars) which we see lacking in other countires."""
 )
 
 
-st.plotly_chart("## Bivariate analysis")
+st.markdown("## Bivariate analysis")
 
+st.code(
+    """
+px.scatter(data_frame=mpg_data, x='cylinders', y = 'origin', color= 'origin')
+px.scatter(data_frame=mpg_data, x='model_year', y='mpg',facet_col='origin')
+avg_group = pd.DataFrame()
+avg_group = mpg_data.groupby(by='model_year').agg(average_mpg = ('mpg', 'mean'))
+avg_group.reset_index()
+px.line(data_frame=avg_group,  y='average_mpg')"""
+)
 
 st.plotly_chart(
     px.scatter(
