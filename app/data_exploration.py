@@ -510,202 +510,146 @@ col_names = [
     "acceleration",
     "model_year",
 ]
-graph_names = [f"{col_names[0].upper()} vs {x.upper()}" for x in col_names[1:]]
-print(graph_names)
+if "selected" not in st.session_state:
+    st.session_state.selected = "mpg"
+
+selected = st.selectbox("Plot a graph of Others vs:", col_names)
+
+
 fig = make_subplots(rows=3, cols=2)
 subplots = [(1, 1), (1, 2), (2, 1), (2, 2), (3, 1), (3, 2)]
 
-for i in range(1, len(col_names)):
-    row, col = subplots[i - 1]
-    fig.add_trace(
-        go.Scatter(
-            x=mpg_data[col_names[0]],
-            y=mpg_data[col_names[i]],
-            mode="markers",
-            name=graph_names[i - 1],
-        ),
-        row=row,
-        col=col,
-    )
-    fig.update_xaxes(title_text=col_names[0], row=row, col=col)
-    fig.update_yaxes(title_text=col_names[i], row=row, col=col)
+i = 0
+for name in col_names:
+    if selected != name:
+        i = i + 1
+        row, col = subplots[i - 1]
+        graph_name = f"{selected.capitalize()} vs {name.capitalize()}"
+        fig.add_trace(
+            go.Scatter(
+                x=mpg_data[selected],
+                y=mpg_data[name],
+                mode="markers",
+                name=graph_name,
+            ),
+            row=row,
+            col=col,
+        )
+        fig.update_xaxes(title_text=selected.capitalize(), row=row, col=col)
+        fig.update_yaxes(title_text=name.capitalize(), row=row, col=col)
 
-fig.update_layout(height=720, width=1080, title_text=f"{col_names[0]} vs others")
-fig.show()
-
-
-# ### Observations: mpg vs others
-#
-# From these graphs, we can make a number of Observations.
-# - A trend that shows more number of cylinders reduces fuel efficiency.
-# - Higher horsepower,displacement and weight show lower fuel efficiency.
-# - Acceleration and mpg do not have a obvious relationship due to a highly scattered plot. We do see a proportional trend, which is quite counter intuitive.
-# - As the years progress, cars are getting more fuel efficient.
+fig.update_layout(
+    height=720, width=1080, title_text=f"{selected.capitalize()} vs Others"
+)
+st.plotly_chart(fig)
 
 
-col_names = [
-    "cylinders",
-    "displacement",
-    "horsepower",
-    "weight",
-    "acceleration",
-    "model_year",
-]
-graph_names = [f"{col_names[0].upper()} vs {x.upper()}" for x in col_names[1:]]
-print(graph_names)
-fig = make_subplots(rows=3, cols=2)
-subplots = [(1, 1), (1, 2), (2, 1), (2, 2), (3, 1), (3, 2)]
+st.markdown(
+    """
+### Observations: others vs Miles per Gallon(mpg)
 
-for i in range(1, len(col_names)):
-    row, col = subplots[i - 1]
-    fig.add_trace(
-        go.Scatter(
-            y=mpg_data[col_names[0]],
-            x=mpg_data[col_names[i]],
-            mode="markers",
-            name=graph_names[i - 1],
-        ),
-        row=row,
-        col=col,
-    )
-    fig.update_yaxes(title_text=col_names[0], row=row, col=col)
-    fig.update_xaxes(title_text=col_names[i], row=row, col=col)
+From these graphs, we can make a number of Observations.
+- A trend that shows more number of cylinders reduces fuel efficiency.
+- Higher horsepower,displacement and weight show lower fuel efficiency.
+- Acceleration and mpg do not have a obvious relationship due to a highly scattered plot. We do see a proportional trend, which is quite counter intuitive.
+- As the years progress, cars are getting more fuel efficient.
 
-fig.update_layout(height=720, width=1080, title_text=f"{col_names[0]} vs others")
-fig.show()
+### Observations: others vs Cylinders
 
+We can see that more number of **cylinder** means higher **horse power**, more **displacement** and also a **heavier engine**.
+There is no clear relationship between the model year and the number of cylinders, indicating that cars with varying engine types were produced across all years.
+Checking out the **4 cylinder** engines, we observe that they give great fuel efficiency with light engines but with lower horse power. This could also mean they are both cheaper to manufacture and to use. This could explain why there are greater number of cars with 4 cylinder engines produced.
+We can not however, say for sure that these 4 cylinder cars are the most poular or most bought cars though. For that, we would need the sales data of these models to be certain.
+**6 cylinder engines** have a good balance of efficiency and horsepower. **8 cylinder engines** pack a punch with higher horsepower but guzzle a lot of fuel. The **8 cylinder** engines are some of the most powerful engines with very high horsepower. This makes sense as more cylinders will displace more fuel, producing more power but meaning lower fuel efficiency. At the same time bigger and heavier engines are needed to accomodate more number of cylinders.
 
-# ### Observations: Cylinders vs others
-# We can see that more number of **cylinder** means higher **horse power**, more **displacement** and also a **heavier engine**.
-#
-# There is no clear relationship between the model year and the number of cylinders, indicating that cars with varying engine types were produced across all years.
-#
-# Checking out the **4 cylinder** engines, we observe that they give great fuel efficiency with light engines but with lower horse power. This could also mean they are both cheaper to manufacture and to use. This could explain why there are greater number of cars with 4 cylinder engines produced.
-#
-# We can not however, say for sure that these 4 cylinder cars are the most poular or most bought cars though. For that, we would need the sales data of these models to be certain.
-#
-# **6 cylinder engines** have a good balance of efficiency and horsepower. **8 cylinder engines** pack a punch with higher horsepower but guzzle a lot of fuel. The **8 cylinder** engines are some of the most powerful engines with very high horsepower. This makes sense as more cylinders will displace more fuel, producing more power but meaning lower fuel efficiency. At the same time bigger and heavier engines are needed to accomodate more number of cylinders.
+### Observation: others vs horsepower &  others vs displacement
 
+We can see the relationships between weight, displacement and horsepower, i.e
 
-from plotly.subplots import make_subplots
+**more displacement &rarr; more horsepower**
+**more displacement &rarr; more weight**
+meaning **higher horsepower** engines are **heavier** like we observed before.
 
-col_names = ["displacement", "horsepower", "weight", "acceleration", "model_year"]
-graph_names = [f"{col_names[0].upper()} vs {x.upper()}" for x in col_names[1:]]
-print(graph_names)
-fig = make_subplots(rows=2, cols=2)
-subplots = [(1, 1), (1, 2), (2, 1), (2, 2)]
+The relationshoip between acceleration and displacement and acceleration and horsepower is negatively proportional though. This is rather counter intuitive as you might think cars having higher horsepower/displacement should provide higher acceleration as well. But that is not the case at all.
 
-for i in range(1, len(col_names)):
-    row, col = subplots[i - 1]
-    fig.add_trace(
-        go.Scatter(
-            x=mpg_data[col_names[0]],
-            y=mpg_data[col_names[i]],
-            mode="markers",
-            name=graph_names[i - 1],
-        ),
-        row=row,
-        col=col,
-    )
-    fig.update_xaxes(title_text=col_names[0], row=row, col=col)
-    fig.update_yaxes(title_text=col_names[i], row=row, col=col)
+What we can also see is that newer models have lower horsepower.
+To make more sense out of this we can create a correlation heatmap and perform further multivariate analysis.
+"""
+)
 
-fig.update_layout(height=720, width=1080, title_text=f"{col_names[0]} vs others")
-fig.show()
-
-
-from plotly.subplots import make_subplots
-
-col_names = ["horsepower", "weight", "acceleration", "model_year"]
-graph_names = [f"{col_names[0].upper()} vs {x.upper()}" for x in col_names[1:]]
-print(graph_names)
-fig = make_subplots(rows=2, cols=2)
-subplots = [(1, 1), (1, 2), (2, 1), (2, 2)]
-
-for i in range(1, len(col_names)):
-    row, col = subplots[i - 1]
-    fig.add_trace(
-        go.Scatter(
-            x=mpg_data[col_names[0]],
-            y=mpg_data[col_names[i]],
-            mode="markers",
-            name=graph_names[i - 1],
-        ),
-        row=row,
-        col=col,
-    )
-    fig.update_xaxes(title_text=col_names[0], row=row, col=col)
-    fig.update_yaxes(title_text=col_names[i], row=row, col=col)
-
-fig.update_layout(height=720, width=1080, title_text=f"{col_names[0]} vs others")
-fig.show()
-
-
-# ### Observation: horsepower vs others & displacement vs others
-# We can see the relationships between weight, displacement and horsepower, i.e
-#
-# **more displacement &rarr; more horsepower**
-#
-# **more displacement &rarr; more weight**
-#
-# meaning **higher horsepower** engines are **heavier** like we observed before.
-#
-# The relationshoip between acceleration and displacement and acceleration and horsepower is negatively proportional though. This is rather counter intuitive as you might think cars having higher horsepower/displacement should provide higher acceleration as well. But that is not the case at all.
-#
-# What we can also see is that newer models have lower horsepower.
-#
-# To make more sense out of this we can create a correlation heatmap and perform further multivariate analysis.
-
-
-# ## CORRELATION HEATMAP
+st.markdown("## CORRELATION HEATMAP")
 
 
 correlation = mpg_data.select_dtypes("number").corr("pearson")
-correlation
-
-
-px.imshow(correlation, text_auto=True, color_continuous_scale="thermal", aspect="auto")
-
-
-# The correlation heatmaps confirms the relation between **cylinder, displacement, horsepower and weight.**
-# We also see that these affect mpg negatively as expected.
-#
-# We can also see that there is a fair relationship between mpg and model years, meaning newer models tend to be fuel efficient.
-#
-# But then acceleration is negatively proportional to cylinder, displacement, horsepower and weight, which is still unexplained.
-# Whats more, there is a weakly positive relation between acceleration and mpg meaning higher acceleration gives better mileage, which is not logical.
-
-
-px.scatter(data_frame=mpg_data, x="horsepower", y="mpg", color="model_year")
-
-
-# From this plot we can confirm that newer models are more efficient than the older ones. However, we can see that the newer models also have lower horsepower.
-
-
-px.scatter(data_frame=mpg_data, x="weight", y="horsepower", color="model_year")
-
-
-# With this graph we find that heavier models are all older models, which also have a lot of horse power. The newer models are not only fuel efficient but are lighter and provide lower power output.
-#
-# This raises a questions as why the companies would build such cars with low power and weight but better fuel efficiency?
-
-
-px.scatter(data_frame=mpg_data, x="horsepower", y="acceleration", color="model_year")
-
-
-# This tells us almost all new models have low horse power but high acceleration. Even though there were some older models that had low horsepower/high acceleration.
-
-
-px.scatter(
-    data_frame=mpg_data,
-    x="weight",
-    y="acceleration",
-    color="horsepower",
-    color_continuous_scale="temps",
+st.plotly_chart(
+    px.imshow(
+        correlation, text_auto=True, color_continuous_scale="thermal", aspect="auto"
+    )
 )
 
 
-# Higher horsepower cars are almost always rather heavy with lower acceleration.
+st.markdown(
+    """The correlation heatmaps confirms the relation between **cylinder, displacement, horsepower and weight.**
+We also see that these affect mpg negatively as expected.
+
+We can also see that there is a fair relationship between mpg and model years, meaning newer models tend to be fuel efficient.
+
+But then acceleration is negatively proportional to cylinder, displacement, horsepower and weight, which is still unexplained.
+Whats more, there is a weakly positive relation between acceleration and mpg meaning higher acceleration gives better mileage, which is not logical.
+
+Now for a more better understanding, we can take more than two variables in a graph:
+"""
+)
+
+ins1, ins2, ins3, ins4 = st.tabs(
+    [
+        "🐎hp vs mpg⛽/ year",
+        "🏋️weight vs mpg⛽/ year",
+        "🐎hp vs acclr🏎️/ year",
+        "🏋️weight vs acclr🏎️/ hp",
+    ]
+)
+with ins1:
+    st.plotly_chart(
+        px.scatter(data_frame=mpg_data, x="horsepower", y="mpg", color="model_year")
+    )
+    st.markdown(
+        "From this plot we can confirm that newer models are more efficient than the older ones. However, we can see that the newer models also have lower horsepower."
+    )
+
+with ins2:
+    st.plotly_chart(
+        px.scatter(data_frame=mpg_data, x="weight", y="horsepower", color="model_year")
+    )
+    st.markdown(
+        """With this graph we find that heavier models are all older models, which also have a lot of horse power. The newer models are not only fuel efficient but are lighter and provide lower power output.
+
+    This raises a questions as why the companies would build such cars with low power and weight but better fuel efficiency?"""
+    )
+
+with ins3:
+    st.plotly_chart(
+        px.scatter(
+            data_frame=mpg_data, x="horsepower", y="acceleration", color="model_year"
+        )
+    )
+    st.markdown(
+        "This tells us almost all new models have low horse power but high acceleration. Even though there were some older models that had low horsepower/high acceleration."
+    )
+
+with ins4:
+    st.plotly_chart(
+        px.scatter(
+            data_frame=mpg_data,
+            x="weight",
+            y="acceleration",
+            color="horsepower",
+            color_continuous_scale="temps",
+        )
+    )
+    st.markdown(
+        "Higher horsepower cars are almost always rather heavy with lower acceleration."
+    )
 
 
 cyl = (
@@ -713,7 +657,9 @@ cyl = (
     .aggregate(avg_no_of_cylinders=("cylinders", "mean"), avg_mpg=("mpg", "mean"))
     .reset_index()
 )
-px.scatter(data_frame=cyl, x="model_year", y="avg_no_of_cylinders", color="avg_mpg")
+st.plotly_chart(
+    px.scatter(data_frame=cyl, x="model_year", y="avg_no_of_cylinders", color="avg_mpg")
+)
 
 
 # Newer cars have fewer no of cylinders on average.
