@@ -576,6 +576,7 @@ To make more sense out of this we can create a correlation heatmap and perform f
 """
 )
 
+st.markdown("# MULTIVARIATE ANALYSIS")
 st.markdown("## CORRELATION HEATMAP")
 
 
