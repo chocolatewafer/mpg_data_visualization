@@ -12,12 +12,18 @@ This documentation contains a pre-rendered notebook attached to it for you to ch
 
 Note that it is not a fullly interactive notebook. For a fully interactive notebook, please download data_exploration.ipynb from the [Github repo](https://github.com/chocolatewafer/mpg_data_visualization.git).
 
-There is also a Streamlit app for this visualization Coming soon!
+There is also a Streamlit app for this visualization: [StreamLit App](https://mpgdatavisualization.streamlit.app/)
 
 ## Project layout
 
 ```
+
 └── 📁mpg_visualization
+    └── 📁.github
+        └── 📁workflows
+            └── ci.yaml
+    └── 📁app
+        └── data_exploration.py
     └── 📁assets
         └── 1977_mazda_rx-4.jpg
         └── 1980_mazda_rx-7.jpg
@@ -37,12 +43,15 @@ There is also a Streamlit app for this visualization Coming soon!
         └── data_exploration_rendered.ipynb
         └── 📁images
             └── plt_1.png
+            └── plt_2.png
             .
             .
             .
             └── plt_22.png
         └── index.md
+    └── .gitignore
+    └── .pre-commit-config.yaml
     └── data_exploration.ipynb
-    └── data_exploration.py
     └── mkdocs.yml
+    └── requirements.txt
 ```
